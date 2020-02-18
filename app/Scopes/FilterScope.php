@@ -16,6 +16,8 @@ class FilterScope implements Scope
 
         if ($search = request('search')) {
             $builder->where('first_name', 'LIKE', "%{$search}%");
+            $builder->orWhere('last_name', 'LIKE', "%{$search}%");
+            $builder->orWhere('email', 'LIKE', "%{$search}%");
         }
     }
 }
