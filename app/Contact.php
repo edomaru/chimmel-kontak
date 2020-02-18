@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Scopes\FilterScope;
+use App\Scopes\SearchScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
@@ -24,5 +25,14 @@ class Contact extends Model
         parent::boot();
 
         static::addGlobalScope(new FilterScope);
+        static::addGlobalScope(new SearchScope);
+        /*
+        // Remove all global scopes:
+        Contact::withoutGlobalScopes()->get();
+        // Remove some global scopes:
+        Contact::withoutGlobalScopes([
+            FilterScope::class, SearchScope::class
+        ])->get();
+        */
     }
 }
