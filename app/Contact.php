@@ -3,12 +3,14 @@
 namespace App;
 
 use App\Scopes\FilterScope;
-use App\Scopes\SearchScope;
+use App\Scopes\ContactSearchScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
     protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'address', 'company_id'];
+
+    public $filterColumns = ['company_id'];
     
     public function company()
     {
@@ -25,7 +27,7 @@ class Contact extends Model
         parent::boot();
 
         static::addGlobalScope(new FilterScope);
-        static::addGlobalScope(new SearchScope);
+        static::addGlobalScope(new ContactSearchScope);
         /*
         // Remove all global scopes:
         Contact::withoutGlobalScopes()->get();

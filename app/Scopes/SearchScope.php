@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchScope implements Scope
 {
-    protected $searchColumns = ['first_name', 'last_name', 'email', 'company.name'];
+    protected $searchColumns = [];
 
     public function apply(Builder $builder, Model $model)
     {
         if ($search = request('search')) 
         {
-            foreach ($this->searchColumns as $index => $column) 
+            $columns = property_exists($model, 'searchColumns') ? $model->searchColumns : $this->searchColumns;
+            
+            foreach ($columns as $index => $column) 
             {
                 $arr = explode('.', $column);
                 $method = $index === 0 ? "where" : "orWhere";
